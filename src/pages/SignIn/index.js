@@ -1,11 +1,12 @@
 import React from 'react';
 import { Form, Input } from '@rocketseat/unform';
+import { Link } from 'react-router-dom';
 
 import logo from '~/assets/logo.svg';
 
 export default function SignIn() {
   return (
-    <>
+    <div>
       <img src={logo} alt="Meetapp" />
 
       <Form>
@@ -18,8 +19,8 @@ export default function SignIn() {
 
         <button type="button">Entrar</button>
 
-        <a href="/">Criar conta grátis</a>
+        <Link to="/register">Criar conta grátis</Link>
       </Form>
-    </>
+    </div>
   );
 }
