@@ -11,8 +11,9 @@ export const Content = styled.div`
   height: 92px;
   display: flex;
   flex: 1;
-  max-width: 660px;
+  max-width: 680px;
   margin: 0 auto;
+  padding: 0 20px;
   align-items: center;
   justify-content: space-between;
 
