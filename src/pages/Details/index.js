@@ -2,6 +2,8 @@ import React from 'react';
 
 import { Container, ButtonContainer, DetailMeetup } from './styles';
 
+import history from '~/services/history';
+
 import image from '~/assets/meetup-example.jpg';
 
 export default function Details() {
@@ -10,7 +12,11 @@ export default function Details() {
       <header>
         <h2>Meus meetups</h2>
         <ButtonContainer>
-          <button id="edit" type="button">
+          <button
+            onClick={() => history.push('/newedit')}
+            id="edit"
+            type="button"
+          >
             Editar
           </button>
           <button id="cancel" type="button">
