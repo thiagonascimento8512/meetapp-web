@@ -7,5 +7,5 @@ export const Wrapper = styled.div`
 
 export const Content = styled.div`
   max-width: 660px;
-  margin: 0 auto;
+  margin: 50px auto 0;
 `;

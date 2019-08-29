@@ -36,5 +36,11 @@ export default createGlobalStyle`
 
   button {
     cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+
+    &:hover {
+      transform: translate(2px, -2px);
+    }
   }
 `;
