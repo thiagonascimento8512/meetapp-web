@@ -47,9 +47,8 @@ export const Content = styled.div`
       }
 
       input {
+        background: rgba(0, 0, 0, 0.2);
         padding: 0 20px;
-        background: #000;
-        opacity: 0.2;
       }
 
       button {
