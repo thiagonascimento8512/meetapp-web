@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { Container, Content, Profile } from './styles';
@@ -10,6 +10,7 @@ import logo from '~/assets/logo.svg';
 
 export default function Header() {
   const dispatch = useDispatch();
+  const { name } = useSelector(state => state.user.profile);
 
   return (
     <Container>
@@ -23,7 +24,7 @@ export default function Header() {
         <aside>
           <Profile>
             <div>
-              <strong>Thiago Nascimento</strong>
+              <strong>{name}</strong>
               <Link to="/profile">Meu Perfil</Link>
             </div>
           </Profile>
