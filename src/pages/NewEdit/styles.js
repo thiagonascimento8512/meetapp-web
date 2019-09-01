@@ -6,6 +6,13 @@ export const Container = styled.div`
     flex-direction: column;
     font-size: 18px;
 
+    span {
+      color: rgba(255, 0, 0, 0.7);
+      font-size: 14px;
+      margin-top: -10px;
+      margin-bottom: 10px;
+    }
+
     textarea,
     input {
       font-family: inherit;
