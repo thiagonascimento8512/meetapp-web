@@ -32,7 +32,7 @@ export default function Profile() {
         <ImageInput name="image" />
         <Input name="title" placeholder="Título do Meetup" />
         <Input multiline name="description" placeholder="Descrição completa" />
-        <DatePicker name="date" placeholder="Data do meetup" />
+        <DatePicker name="date" />
         <Input name="location" placeholder="Localização" />
 
         <button type="submit">Salvar meetup</button>

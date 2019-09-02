@@ -31,7 +31,34 @@ export const Container = styled.div`
       resize: none;
     }
 
-    button {
+    .react-datepicker-wrapper,
+    .react-datepicker__input-container,
+    #date {
+      width: 100%;
+    }
+
+    .react-datepicker__close-icon::after {
+      background-color: #f94d6a;
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      line-height: 1.3;
+    }
+    .react-datepicker__time-container {
+      right: -85px;
+      top: -1px;
+
+      .react-datepicker__time {
+        .react-datepicker__time-box {
+          .react-datepicker__time-list {
+            width: 83px;
+            height: 231px !important;
+          }
+        }
+      }
+    }
+
+    & > button {
       width: 180px;
       height: 42px;
       background: #f94d6a;
