@@ -12,6 +12,13 @@ export function meetappCreateSuccess(meetup) {
   };
 }
 
+export function meetappView(id) {
+  return {
+    type: '@meetapp/MEETAPP_VIEW',
+    payload: { id },
+  };
+}
+
 export function meetappIndexRequest() {
   return {
     type: '@meetapp/MEETAPP_INDEX',

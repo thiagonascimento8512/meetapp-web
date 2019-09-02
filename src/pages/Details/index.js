@@ -1,19 +1,22 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { format, parseISO } from 'date-fns';
+import pt from 'date-fns/locale/pt';
 
 import { Container, ButtonContainer, DetailMeetup } from './styles';
 
 import history from '~/services/history';
 
-import image from '~/assets/meetup-example.jpg';
+export default function Details({ match }) {
+  const { meetupPreview } = useSelector(state => state.meetapp);
 
-export default function Details() {
   return (
     <Container>
       <header>
         <h2>Meus meetups</h2>
         <ButtonContainer>
           <button
-            onClick={() => history.push('/newedit')}
+            onClick={() => history.push(`/newedit/${match.params.id}`)}
             id="edit"
             type="button"
           >
@@ -25,20 +28,26 @@ export default function Details() {
         </ButtonContainer>
       </header>
 
-      <DetailMeetup>
-        <img src={image} alt="Meetup" />
-        <p>
-          O Meetup de React Native é um evento que reúne a comunidade de
-          desenvolvimento mobile utilizando React a fim de compartilhar
-          conhecimento. Todos são convidados. Caso queira participar como
-          palestrante do meetup envie um e-mail para
-          organizacao@meetuprn.com.br.
-        </p>
-        <div>
-          <time>24 de Junho, às 20h</time>
-          <span>Rua Guilherme Gembala, 260</span>
-        </div>
-      </DetailMeetup>
+      {meetupPreview ? (
+        <DetailMeetup>
+          <img src={meetupPreview.banner.url} alt="Banner" />
+          <p>{meetupPreview.description}</p>
+          <div>
+            <time>
+              {format(
+                parseISO(meetupPreview.date),
+                "dd 'de' MMMM 'de' yyyy, 'às' HH:mm",
+                {
+                  locale: pt,
+                }
+              )}
+            </time>
+            <span>{meetupPreview.location}</span>
+          </div>
+        </DetailMeetup>
+      ) : (
+        history.push('/dashboard')
+      )}
     </Container>
   );
 }

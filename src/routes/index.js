@@ -17,9 +17,11 @@ export default function routes() {
       <Route path="/register" component={SignUp} />
 
       <Route path="/newedit" component={NewEdit} isPrivate />
-      <Route path="/details" component={Details} isPrivate />
+      <Route path="/newedit/:id" component={NewEdit} isPrivate />
+      <Route path="/details/:id" component={Details} isPrivate />
       <Route path="/dashboard" component={Dashboard} isPrivate />
       <Route path="/profile" component={Profile} isPrivate />
+      <Route path="*" component={Dashboard} isPrivate />
     </Switch>
   );
 }

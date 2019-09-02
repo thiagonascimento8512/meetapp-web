@@ -5,7 +5,10 @@ import pt from 'date-fns/locale/pt';
 
 import history from '~/services/history';
 
-import { meetappIndexRequest } from '~/store/modules/meetapp/actions';
+import {
+  meetappIndexRequest,
+  meetappView,
+} from '~/store/modules/meetapp/actions';
 
 import { Container, MeetupContainer, Meetup, Title, Time } from './styles';
 
@@ -13,8 +16,9 @@ export default function Dashboard() {
   const dispatch = useDispatch();
   const { meetups } = useSelector(state => state.meetapp);
 
-  function handleNavigation() {
-    history.push('/details');
+  function handleNavigation(id) {
+    dispatch(meetappView(id));
+    history.push(`/details/${id}`);
   }
 
   useEffect(() => {
@@ -31,7 +35,7 @@ export default function Dashboard() {
       </header>
       <MeetupContainer>
         {meetups.map(meetup => (
-          <Meetup key={meetup.id} onClick={handleNavigation}>
+          <Meetup key={meetup.id} onClick={() => handleNavigation(meetup.id)}>
             <Title>{meetup.title}</Title>
             <Time>
               {format(

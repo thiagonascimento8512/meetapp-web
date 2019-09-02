@@ -2,7 +2,7 @@ import { produce } from 'immer';
 
 const INITIAL_STATE = {
   meetups: [],
-  meetupEdit: {},
+  meetupPreview: null,
 };
 
 export default function meetapp(state = INITIAL_STATE, action) {
@@ -14,6 +14,15 @@ export default function meetapp(state = INITIAL_STATE, action) {
       }
       case '@meetapp/MEETAPP_CREATE_SUCCESS': {
         draft.meetups.push(action.payload.meetup);
+        break;
+      }
+      case '@meetapp/MEETAPP_VIEW': {
+        draft.meetups.map(m => {
+          if (m.id === action.payload.id) {
+            draft.meetupPreview = m;
+          }
+          return m;
+        });
         break;
       }
       default:

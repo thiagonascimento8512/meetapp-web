@@ -28,7 +28,13 @@ export function* meetappCreate({ payload }) {
   }
 }
 
+export function meetappView({ payload }) {
+  console.tron.log(payload.id);
+}
+
 export default all([
+  takeLatest('persist/REHYDRATE', getMeetups),
   takeLatest('@meetapp/MEETAPP_CREATE_REQUEST', meetappCreate),
+  takeLatest('@meetapp/MEETAPP_VIEW', meetappView),
   takeLatest('@meetapp/MEETAPP_INDEX', getMeetups),
 ]);
