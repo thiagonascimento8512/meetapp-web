@@ -4,10 +4,23 @@ import { toast } from 'react-toastify';
 import api from '~/services/api';
 import history from '~/services/history';
 
+import { meetappIndexSuccess, meetappCreateSuccess } from './actions';
+
+export function* getMeetups() {
+  try {
+    const response = yield call(api.get, 'mymeetups');
+
+    yield put(meetappIndexSuccess(response.data));
+  } catch (error) {
+    toast.error('Não foi possível obter os meetups!');
+  }
+}
+
 export function* meetappCreate({ payload }) {
   try {
     const { data } = payload;
     const response = yield call(api.post, 'meetup', data);
+    yield put(meetappCreateSuccess(response.data));
     toast.success('Meetapp criado com sucesso!');
     history.push('/dashboard');
   } catch (err) {
@@ -17,4 +30,5 @@ export function* meetappCreate({ payload }) {
 
 export default all([
   takeLatest('@meetapp/MEETAPP_CREATE_REQUEST', meetappCreate),
+  takeLatest('@meetapp/MEETAPP_INDEX', getMeetups),
 ]);
