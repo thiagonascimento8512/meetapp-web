@@ -1,5 +1,6 @@
 import { all, takeLatest, call, put } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
+import { isBefore, parseISO } from 'date-fns';
 
 import api from '~/services/api';
 import history from '~/services/history';
@@ -32,9 +33,27 @@ export function meetappView({ payload }) {
   console.tron.log(payload.id);
 }
 
+export function* cancelMeetup({ payload }) {
+  const { meetup } = payload;
+
+  if (isBefore(parseISO(meetup.date), new Date())) {
+    toast.error('Você não pode cancelar um meetup que já passou!');
+    return;
+  }
+
+  try {
+    yield call(api.delete, `meetup/${meetup.id}`);
+    toast.success('Meetup cancelado com sucesso!');
+    history.push('/');
+  } catch (error) {
+    toast.error('Não foi possíve cancelar o meetup!');
+  }
+}
+
 export default all([
   takeLatest('persist/REHYDRATE', getMeetups),
   takeLatest('@meetapp/MEETAPP_CREATE_REQUEST', meetappCreate),
   takeLatest('@meetapp/MEETAPP_VIEW', meetappView),
   takeLatest('@meetapp/MEETAPP_INDEX', getMeetups),
+  takeLatest('@meetapp/MEETAPP_CANCEL_REQUEST', cancelMeetup),
 ]);

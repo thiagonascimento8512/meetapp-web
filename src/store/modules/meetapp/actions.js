@@ -12,6 +12,20 @@ export function meetappCreateSuccess(meetup) {
   };
 }
 
+export function meetappCancelRequest(meetup) {
+  return {
+    type: '@meetapp/MEETAPP_CANCEL_REQUEST',
+    payload: { meetup },
+  };
+}
+
+export function meetappCancelSuccess(id) {
+  return {
+    type: '@meetapp/MEETAPP_CANCEL_SUCCESS',
+    payload: { id },
+  };
+}
+
 export function meetappView(id) {
   return {
     type: '@meetapp/MEETAPP_VIEW',

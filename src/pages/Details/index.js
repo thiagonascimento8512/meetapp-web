@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { format, parseISO } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 
@@ -7,8 +7,19 @@ import { Container, ButtonContainer, DetailMeetup } from './styles';
 
 import history from '~/services/history';
 
+import { meetappCancelRequest } from '~/store/modules/meetapp/actions';
+
 export default function Details({ match }) {
+  const dispatch = useDispatch();
   const { meetupPreview } = useSelector(state => state.meetapp);
+
+  function handleCancel(meetup) {
+    const confirm = window.confirm('Deseja cancelar este meetapp?');
+
+    if (!confirm) return;
+
+    dispatch(meetappCancelRequest(meetup));
+  }
 
   return (
     <Container>
@@ -22,7 +33,11 @@ export default function Details({ match }) {
           >
             Editar
           </button>
-          <button id="cancel" type="button">
+          <button
+            id="cancel"
+            type="button"
+            onClick={() => handleCancel(meetupPreview)}
+          >
             Cancelar
           </button>
         </ButtonContainer>
