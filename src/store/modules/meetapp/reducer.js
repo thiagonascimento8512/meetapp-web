@@ -3,6 +3,7 @@ import { produce } from 'immer';
 const INITIAL_STATE = {
   meetups: [],
   meetupPreview: null,
+  meetupEdit: null,
 };
 
 export default function meetapp(state = INITIAL_STATE, action) {
@@ -10,6 +11,7 @@ export default function meetapp(state = INITIAL_STATE, action) {
     switch (action.type) {
       case '@meetapp/MEETAPP_INDEX_SUCCESS': {
         draft.meetups = action.payload.data;
+        draft.meetupPreview = null;
         break;
       }
       case '@meetapp/MEETAPP_CREATE_SUCCESS': {
@@ -23,6 +25,10 @@ export default function meetapp(state = INITIAL_STATE, action) {
           }
           return m;
         });
+        break;
+      }
+      case '@meetapp/MEETAPP_EDIT_SUCCESS': {
+        draft.meetupEdit = action.payload.data;
         break;
       }
       default:

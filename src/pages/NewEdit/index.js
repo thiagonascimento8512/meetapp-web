@@ -1,9 +1,12 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Form, Input } from '@rocketseat/unform';
 import * as Yup from 'yup';
 
-import { meetappCreateRequest } from '~/store/modules/meetapp/actions';
+import {
+  meetappCreateRequest,
+  meetappUpdateRequest,
+} from '~/store/modules/meetapp/actions';
 
 import { Container } from './styles';
 import ImageInput from './ImageInput';
@@ -16,23 +19,38 @@ const schema = Yup.object().shape({
   date: Yup.date()
     .required()
     .typeError('Data inválida!'),
-  image: Yup.number().required(),
+  image: Yup.number().required('A imagem é obrigatória'),
 });
 
 export default function Profile() {
   const dispatch = useDispatch();
 
+  const meetup = useSelector(state => state.meetapp.meetupEdit);
+
   function handleSubmit(data) {
-    dispatch(meetappCreateRequest(data));
+    if (meetup) {
+      const update = {
+        id: meetup.id,
+        ...data,
+      };
+
+      dispatch(meetappUpdateRequest(update));
+    } else {
+      dispatch(meetappCreateRequest(data));
+    }
   }
 
   return (
     <Container>
-      <Form schema={schema} onSubmit={handleSubmit}>
+      <Form
+        schema={schema}
+        onSubmit={handleSubmit}
+        initialData={meetup ? meetup : null}
+      >
         <ImageInput name="image" />
         <Input name="title" placeholder="Título do Meetup" />
         <Input multiline name="description" placeholder="Descrição completa" />
-        <DatePicker name="date" />
+        <DatePicker name="date" autoComplete={false} />
         <Input name="location" placeholder="Localização" />
 
         <button type="submit">Salvar meetup</button>

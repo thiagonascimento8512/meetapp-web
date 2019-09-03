@@ -45,3 +45,24 @@ export function meetappIndexSuccess(data) {
     payload: { data },
   };
 }
+
+export function meetappUpdateRequest(data) {
+  return {
+    type: '@meetapp/MEETAPP_UPDATE_REQUEST',
+    payload: { data },
+  };
+}
+
+export function meetappEditRequest(data) {
+  return {
+    type: '@meetapp/MEETAPP_EDIT_REQUEST',
+    payload: { data },
+  };
+}
+
+export function meetappEditSuccess(data) {
+  return {
+    type: '@meetapp/MEETAPP_EDIT_SUCCESS',
+    payload: { data },
+  };
+}

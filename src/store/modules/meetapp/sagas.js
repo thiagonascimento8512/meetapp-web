@@ -5,15 +5,19 @@ import { isBefore, parseISO } from 'date-fns';
 import api from '~/services/api';
 import history from '~/services/history';
 
-import { meetappIndexSuccess, meetappCreateSuccess } from './actions';
+import {
+  meetappIndexSuccess,
+  meetappCreateSuccess,
+  meetappEditSuccess,
+} from './actions';
+import { signOut } from '~/store/modules/auth/actions';
 
 export function* getMeetups() {
   try {
     const response = yield call(api.get, 'mymeetups');
-
     yield put(meetappIndexSuccess(response.data));
   } catch (error) {
-    toast.error('Não foi possível obter os meetups!');
+    yield put(signOut());
   }
 }
 
@@ -50,10 +54,35 @@ export function* cancelMeetup({ payload }) {
   }
 }
 
+export function* updateMeetup({ payload }) {
+  const { data } = payload;
+
+  try {
+    yield call(api.put, 'meetup', data);
+    toast.success('Meetup atualizado com sucesso!');
+    history.push('/dashboard');
+  } catch (error) {
+    toast.error('Erro ao atualizar o meetapp, verifique as informações!');
+  }
+}
+
+export function* editMeetup({ payload }) {
+  const { data: meetup } = payload;
+
+  if (isBefore(parseISO(meetup.date), new Date()))
+    toast.error('Você não pode editar um meetup que já passou!');
+  else {
+    yield put(meetappEditSuccess(meetup));
+    history.push('/newedit');
+  }
+}
+
 export default all([
   takeLatest('persist/REHYDRATE', getMeetups),
   takeLatest('@meetapp/MEETAPP_CREATE_REQUEST', meetappCreate),
   takeLatest('@meetapp/MEETAPP_VIEW', meetappView),
   takeLatest('@meetapp/MEETAPP_INDEX', getMeetups),
   takeLatest('@meetapp/MEETAPP_CANCEL_REQUEST', cancelMeetup),
+  takeLatest('@meetapp/MEETAPP_UPDATE_REQUEST', updateMeetup),
+  takeLatest('@meetapp/MEETAPP_EDIT_REQUEST', editMeetup),
 ]);

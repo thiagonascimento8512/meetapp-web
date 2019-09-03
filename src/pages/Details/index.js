@@ -7,7 +7,10 @@ import { Container, ButtonContainer, DetailMeetup } from './styles';
 
 import history from '~/services/history';
 
-import { meetappCancelRequest } from '~/store/modules/meetapp/actions';
+import {
+  meetappCancelRequest,
+  meetappEditRequest,
+} from '~/store/modules/meetapp/actions';
 
 export default function Details({ match }) {
   const dispatch = useDispatch();
@@ -27,7 +30,7 @@ export default function Details({ match }) {
         <h2>Meus meetups</h2>
         <ButtonContainer>
           <button
-            onClick={() => history.push(`/newedit/${match.params.id}`)}
+            onClick={() => dispatch(meetappEditRequest(meetupPreview))}
             id="edit"
             type="button"
           >
