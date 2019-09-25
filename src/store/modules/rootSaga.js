@@ -5,5 +5,5 @@ import user from './user/sagas';
 import meetapp from './meetapp/sagas';
 
 export default function* rootSaga() {
-  yield all([auth, user, meetapp]);
+  return yield all([auth, user, meetapp]);
 }
